@@ -1,0 +1,553 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище AuthorizationModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DataConnectionSubscribers">
+          <Key>
+            <PropertyRef Name="IdConnection" />
+          </Key>
+          <Property Name="IdConnection" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NumberPort" Type="int" Nullable="false" />
+          <Property Name="IdTypePort" Type="int" Nullable="false" />
+          <Property Name="IdPerson" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EquipmentData">
+          <Key>
+            <PropertyRef Name="IdTypeEquipment" />
+          </Key>
+          <Property Name="IdTypeEquipment" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IdentificationData">
+          <Key>
+            <PropertyRef Name="IdIdentificationData" />
+          </Key>
+          <Property Name="IdIdentificationData" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SerialNumber" Type="int" Nullable="false" />
+          <Property Name="InventoryNumber" Type="int" Nullable="false" />
+          <Property Name="IP" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MAC" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="OtherData" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="InformationInstalledEquipment">
+          <Key>
+            <PropertyRef Name="IdInstalledEquipment" />
+          </Key>
+          <Property Name="IdInstalledEquipment" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdTypeEquipmentData" Type="int" Nullable="false" />
+          <Property Name="idIdentificationData" Type="int" Nullable="false" />
+          <Property Name="idTypePort" Type="int" Nullable="false" />
+          <Property Name="NumberPorts" Type="int" Nullable="false" />
+          <Property Name="IdInstallationInformation" Type="int" Nullable="false" />
+          <Property Name="OtherInformation" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="InstallationPlaceInformation">
+          <Key>
+            <PropertyRef Name="IdInstallation" />
+          </Key>
+          <Property Name="IdInstallation" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ConnectionPoint" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="GeograficalCoordinates" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Persons">
+          <Key>
+            <PropertyRef Name="IdPerson" />
+          </Key>
+          <Property Name="IdPerson" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Family" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Patronimic" Type="nvarchar" MaxLength="50" />
+          <Property Name="IdRole" Type="int" Nullable="false" />
+          <Property Name="IdUser" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="IdRole" />
+          </Key>
+          <Property Name="IdRole" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Role" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TypesPorts">
+          <Key>
+            <PropertyRef Name="IdTypePort" />
+          </Key>
+          <Property Name="IdTypePort" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypePort" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="IdUser" />
+          </Key>
+          <Property Name="IdUser" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Number" Type="int" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_DataConnectionSubscribers_Persons">
+          <End Role="Persons" Type="Self.Persons" Multiplicity="1" />
+          <End Role="DataConnectionSubscribers" Type="Self.DataConnectionSubscribers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persons">
+              <PropertyRef Name="IdPerson" />
+            </Principal>
+            <Dependent Role="DataConnectionSubscribers">
+              <PropertyRef Name="IdPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InformationInstalledEquipment_EquipmentData">
+          <End Role="EquipmentData" Type="Self.EquipmentData" Multiplicity="1" />
+          <End Role="InformationInstalledEquipment" Type="Self.InformationInstalledEquipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EquipmentData">
+              <PropertyRef Name="IdTypeEquipment" />
+            </Principal>
+            <Dependent Role="InformationInstalledEquipment">
+              <PropertyRef Name="IdTypeEquipmentData" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InformationInstalledEquipment_IdentificationData">
+          <End Role="IdentificationData" Type="Self.IdentificationData" Multiplicity="1" />
+          <End Role="InformationInstalledEquipment" Type="Self.InformationInstalledEquipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IdentificationData">
+              <PropertyRef Name="IdIdentificationData" />
+            </Principal>
+            <Dependent Role="InformationInstalledEquipment">
+              <PropertyRef Name="idIdentificationData" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InformationInstalledEquipment_InstallationPlaceInformation">
+          <End Role="InstallationPlaceInformation" Type="Self.InstallationPlaceInformation" Multiplicity="1" />
+          <End Role="InformationInstalledEquipment" Type="Self.InformationInstalledEquipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InstallationPlaceInformation">
+              <PropertyRef Name="IdInstallation" />
+            </Principal>
+            <Dependent Role="InformationInstalledEquipment">
+              <PropertyRef Name="IdInstallationInformation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InformationInstalledEquipment_TypesPorts">
+          <End Role="TypesPorts" Type="Self.TypesPorts" Multiplicity="1" />
+          <End Role="InformationInstalledEquipment" Type="Self.InformationInstalledEquipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypesPorts">
+              <PropertyRef Name="IdTypePort" />
+            </Principal>
+            <Dependent Role="InformationInstalledEquipment">
+              <PropertyRef Name="idTypePort" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Persons_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="Persons" Type="Self.Persons" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="IdRole" />
+            </Principal>
+            <Dependent Role="Persons">
+              <PropertyRef Name="IdRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Persons_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Persons" Type="Self.Persons" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="Persons">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище AuthorizationModelContainer">
+          <EntitySet Name="DataConnectionSubscribers" EntityType="Self.DataConnectionSubscribers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EquipmentData" EntityType="Self.EquipmentData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IdentificationData" EntityType="Self.IdentificationData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InformationInstalledEquipment" EntityType="Self.InformationInstalledEquipment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InstallationPlaceInformation" EntityType="Self.InstallationPlaceInformation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Persons" EntityType="Self.Persons" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypesPorts" EntityType="Self.TypesPorts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DataConnectionSubscribers_Persons" Association="Self.FK_DataConnectionSubscribers_Persons">
+            <End Role="Persons" EntitySet="Persons" />
+            <End Role="DataConnectionSubscribers" EntitySet="DataConnectionSubscribers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InformationInstalledEquipment_EquipmentData" Association="Self.FK_InformationInstalledEquipment_EquipmentData">
+            <End Role="EquipmentData" EntitySet="EquipmentData" />
+            <End Role="InformationInstalledEquipment" EntitySet="InformationInstalledEquipment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InformationInstalledEquipment_IdentificationData" Association="Self.FK_InformationInstalledEquipment_IdentificationData">
+            <End Role="IdentificationData" EntitySet="IdentificationData" />
+            <End Role="InformationInstalledEquipment" EntitySet="InformationInstalledEquipment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InformationInstalledEquipment_InstallationPlaceInformation" Association="Self.FK_InformationInstalledEquipment_InstallationPlaceInformation">
+            <End Role="InstallationPlaceInformation" EntitySet="InstallationPlaceInformation" />
+            <End Role="InformationInstalledEquipment" EntitySet="InformationInstalledEquipment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InformationInstalledEquipment_TypesPorts" Association="Self.FK_InformationInstalledEquipment_TypesPorts">
+            <End Role="TypesPorts" EntitySet="TypesPorts" />
+            <End Role="InformationInstalledEquipment" EntitySet="InformationInstalledEquipment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Persons_Roles" Association="Self.FK_Persons_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Persons" EntitySet="Persons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Persons_Users" Association="Self.FK_Persons_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Persons" EntitySet="Persons" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AuthorizationModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DataConnectionSubscriber">
+          <Key>
+            <PropertyRef Name="IdConnection" />
+          </Key>
+          <Property Name="IdConnection" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NumberPort" Type="Int32" Nullable="false" />
+          <Property Name="IdTypePort" Type="Int32" Nullable="false" />
+          <Property Name="IdPerson" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="Self.FK_DataConnectionSubscribers_Persons" FromRole="DataConnectionSubscribers" ToRole="Persons" />
+        </EntityType>
+        <EntityType Name="EquipmentData">
+          <Key>
+            <PropertyRef Name="IdTypeEquipment" />
+          </Key>
+          <Property Name="IdTypeEquipment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="InformationInstalledEquipments" Relationship="Self.FK_InformationInstalledEquipment_EquipmentData" FromRole="EquipmentData" ToRole="InformationInstalledEquipment" />
+        </EntityType>
+        <EntityType Name="IdentificationData">
+          <Key>
+            <PropertyRef Name="IdIdentificationData" />
+          </Key>
+          <Property Name="IdIdentificationData" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SerialNumber" Type="Int32" Nullable="false" />
+          <Property Name="InventoryNumber" Type="Int32" Nullable="false" />
+          <Property Name="IP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MAC" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OtherData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="InformationInstalledEquipments" Relationship="Self.FK_InformationInstalledEquipment_IdentificationData" FromRole="IdentificationData" ToRole="InformationInstalledEquipment" />
+        </EntityType>
+        <EntityType Name="InformationInstalledEquipment">
+          <Key>
+            <PropertyRef Name="IdInstalledEquipment" />
+          </Key>
+          <Property Name="IdInstalledEquipment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdTypeEquipmentData" Type="Int32" Nullable="false" />
+          <Property Name="idIdentificationData" Type="Int32" Nullable="false" />
+          <Property Name="idTypePort" Type="Int32" Nullable="false" />
+          <Property Name="NumberPorts" Type="Int32" Nullable="false" />
+          <Property Name="IdInstallationInformation" Type="Int32" Nullable="false" />
+          <Property Name="OtherInformation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="EquipmentData" Relationship="Self.FK_InformationInstalledEquipment_EquipmentData" FromRole="InformationInstalledEquipment" ToRole="EquipmentData" />
+          <NavigationProperty Name="IdentificationData" Relationship="Self.FK_InformationInstalledEquipment_IdentificationData" FromRole="InformationInstalledEquipment" ToRole="IdentificationData" />
+          <NavigationProperty Name="InstallationPlaceInformation" Relationship="Self.FK_InformationInstalledEquipment_InstallationPlaceInformation" FromRole="InformationInstalledEquipment" ToRole="InstallationPlaceInformation" />
+          <NavigationProperty Name="TypesPort" Relationship="Self.FK_InformationInstalledEquipment_TypesPorts" FromRole="InformationInstalledEquipment" ToRole="TypesPorts" />
+        </EntityType>
+        <EntityType Name="InstallationPlaceInformation">
+          <Key>
+            <PropertyRef Name="IdInstallation" />
+          </Key>
+          <Property Name="IdInstallation" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ConnectionPoint" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="GeograficalCoordinates" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="InformationInstalledEquipments" Relationship="Self.FK_InformationInstalledEquipment_InstallationPlaceInformation" FromRole="InstallationPlaceInformation" ToRole="InformationInstalledEquipment" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="IdPerson" />
+          </Key>
+          <Property Name="IdPerson" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Family" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Patronimic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IdRole" Type="Int32" Nullable="false" />
+          <Property Name="IdUser" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DataConnectionSubscribers" Relationship="Self.FK_DataConnectionSubscribers_Persons" FromRole="Persons" ToRole="DataConnectionSubscribers" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_Persons_Roles" FromRole="Persons" ToRole="Roles" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Persons_Users" FromRole="Persons" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="IdRole" />
+          </Key>
+          <Property Name="IdRole" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Role1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Persons" Relationship="Self.FK_Persons_Roles" FromRole="Roles" ToRole="Persons" />
+        </EntityType>
+        <EntityType Name="TypesPort">
+          <Key>
+            <PropertyRef Name="IdTypePort" />
+          </Key>
+          <Property Name="IdTypePort" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypePort" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="InformationInstalledEquipments" Relationship="Self.FK_InformationInstalledEquipment_TypesPorts" FromRole="TypesPorts" ToRole="InformationInstalledEquipment" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="IdUser" />
+          </Key>
+          <Property Name="IdUser" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Password" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Persons" Relationship="Self.FK_Persons_Users" FromRole="Users" ToRole="Persons" />
+          <Property Name="Number" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_DataConnectionSubscribers_Persons">
+          <End Role="Persons" Type="Self.Person" Multiplicity="1" />
+          <End Role="DataConnectionSubscribers" Type="Self.DataConnectionSubscriber" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persons">
+              <PropertyRef Name="IdPerson" />
+            </Principal>
+            <Dependent Role="DataConnectionSubscribers">
+              <PropertyRef Name="IdPerson" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InformationInstalledEquipment_EquipmentData">
+          <End Role="EquipmentData" Type="Self.EquipmentData" Multiplicity="1" />
+          <End Role="InformationInstalledEquipment" Type="Self.InformationInstalledEquipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EquipmentData">
+              <PropertyRef Name="IdTypeEquipment" />
+            </Principal>
+            <Dependent Role="InformationInstalledEquipment">
+              <PropertyRef Name="IdTypeEquipmentData" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InformationInstalledEquipment_IdentificationData">
+          <End Role="IdentificationData" Type="Self.IdentificationData" Multiplicity="1" />
+          <End Role="InformationInstalledEquipment" Type="Self.InformationInstalledEquipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IdentificationData">
+              <PropertyRef Name="IdIdentificationData" />
+            </Principal>
+            <Dependent Role="InformationInstalledEquipment">
+              <PropertyRef Name="idIdentificationData" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InformationInstalledEquipment_InstallationPlaceInformation">
+          <End Role="InstallationPlaceInformation" Type="Self.InstallationPlaceInformation" Multiplicity="1" />
+          <End Role="InformationInstalledEquipment" Type="Self.InformationInstalledEquipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InstallationPlaceInformation">
+              <PropertyRef Name="IdInstallation" />
+            </Principal>
+            <Dependent Role="InformationInstalledEquipment">
+              <PropertyRef Name="IdInstallationInformation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InformationInstalledEquipment_TypesPorts">
+          <End Role="TypesPorts" Type="Self.TypesPort" Multiplicity="1" />
+          <End Role="InformationInstalledEquipment" Type="Self.InformationInstalledEquipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypesPorts">
+              <PropertyRef Name="IdTypePort" />
+            </Principal>
+            <Dependent Role="InformationInstalledEquipment">
+              <PropertyRef Name="idTypePort" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Persons_Roles">
+          <End Role="Roles" Type="Self.Role" Multiplicity="1" />
+          <End Role="Persons" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="IdRole" />
+            </Principal>
+            <Dependent Role="Persons">
+              <PropertyRef Name="IdRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Persons_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Persons" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="Persons">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AuthorizationEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DataConnectionSubscribers" EntityType="Self.DataConnectionSubscriber" />
+          <EntitySet Name="EquipmentDatas" EntityType="Self.EquipmentData" />
+          <EntitySet Name="IdentificationDatas" EntityType="Self.IdentificationData" />
+          <EntitySet Name="InformationInstalledEquipments" EntityType="Self.InformationInstalledEquipment" />
+          <EntitySet Name="InstallationPlaceInformations" EntityType="Self.InstallationPlaceInformation" />
+          <EntitySet Name="Persons" EntityType="Self.Person" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="TypesPorts" EntityType="Self.TypesPort" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_DataConnectionSubscribers_Persons" Association="Self.FK_DataConnectionSubscribers_Persons">
+            <End Role="Persons" EntitySet="Persons" />
+            <End Role="DataConnectionSubscribers" EntitySet="DataConnectionSubscribers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InformationInstalledEquipment_EquipmentData" Association="Self.FK_InformationInstalledEquipment_EquipmentData">
+            <End Role="EquipmentData" EntitySet="EquipmentDatas" />
+            <End Role="InformationInstalledEquipment" EntitySet="InformationInstalledEquipments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InformationInstalledEquipment_IdentificationData" Association="Self.FK_InformationInstalledEquipment_IdentificationData">
+            <End Role="IdentificationData" EntitySet="IdentificationDatas" />
+            <End Role="InformationInstalledEquipment" EntitySet="InformationInstalledEquipments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InformationInstalledEquipment_InstallationPlaceInformation" Association="Self.FK_InformationInstalledEquipment_InstallationPlaceInformation">
+            <End Role="InstallationPlaceInformation" EntitySet="InstallationPlaceInformations" />
+            <End Role="InformationInstalledEquipment" EntitySet="InformationInstalledEquipments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InformationInstalledEquipment_TypesPorts" Association="Self.FK_InformationInstalledEquipment_TypesPorts">
+            <End Role="TypesPorts" EntitySet="TypesPorts" />
+            <End Role="InformationInstalledEquipment" EntitySet="InformationInstalledEquipments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Persons_Roles" Association="Self.FK_Persons_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Persons" EntitySet="Persons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Persons_Users" Association="Self.FK_Persons_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Persons" EntitySet="Persons" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище AuthorizationModelContainer" CdmEntityContainer="AuthorizationEntities">
+          <EntitySetMapping Name="DataConnectionSubscribers">
+            <EntityTypeMapping TypeName="AuthorizationModel.DataConnectionSubscriber">
+              <MappingFragment StoreEntitySet="DataConnectionSubscribers">
+                <ScalarProperty Name="IdConnection" ColumnName="IdConnection" />
+                <ScalarProperty Name="NumberPort" ColumnName="NumberPort" />
+                <ScalarProperty Name="IdTypePort" ColumnName="IdTypePort" />
+                <ScalarProperty Name="IdPerson" ColumnName="IdPerson" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EquipmentDatas">
+            <EntityTypeMapping TypeName="AuthorizationModel.EquipmentData">
+              <MappingFragment StoreEntitySet="EquipmentData">
+                <ScalarProperty Name="IdTypeEquipment" ColumnName="IdTypeEquipment" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IdentificationDatas">
+            <EntityTypeMapping TypeName="AuthorizationModel.IdentificationData">
+              <MappingFragment StoreEntitySet="IdentificationData">
+                <ScalarProperty Name="IdIdentificationData" ColumnName="IdIdentificationData" />
+                <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
+                <ScalarProperty Name="InventoryNumber" ColumnName="InventoryNumber" />
+                <ScalarProperty Name="IP" ColumnName="IP" />
+                <ScalarProperty Name="MAC" ColumnName="MAC" />
+                <ScalarProperty Name="OtherData" ColumnName="OtherData" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InformationInstalledEquipments">
+            <EntityTypeMapping TypeName="AuthorizationModel.InformationInstalledEquipment">
+              <MappingFragment StoreEntitySet="InformationInstalledEquipment">
+                <ScalarProperty Name="IdInstalledEquipment" ColumnName="IdInstalledEquipment" />
+                <ScalarProperty Name="IdTypeEquipmentData" ColumnName="IdTypeEquipmentData" />
+                <ScalarProperty Name="idIdentificationData" ColumnName="idIdentificationData" />
+                <ScalarProperty Name="idTypePort" ColumnName="idTypePort" />
+                <ScalarProperty Name="NumberPorts" ColumnName="NumberPorts" />
+                <ScalarProperty Name="IdInstallationInformation" ColumnName="IdInstallationInformation" />
+                <ScalarProperty Name="OtherInformation" ColumnName="OtherInformation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InstallationPlaceInformations">
+            <EntityTypeMapping TypeName="AuthorizationModel.InstallationPlaceInformation">
+              <MappingFragment StoreEntitySet="InstallationPlaceInformation">
+                <ScalarProperty Name="IdInstallation" ColumnName="IdInstallation" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="ConnectionPoint" ColumnName="ConnectionPoint" />
+                <ScalarProperty Name="GeograficalCoordinates" ColumnName="GeograficalCoordinates" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Persons">
+            <EntityTypeMapping TypeName="AuthorizationModel.Person">
+              <MappingFragment StoreEntitySet="Persons">
+                <ScalarProperty Name="IdPerson" ColumnName="IdPerson" />
+                <ScalarProperty Name="Family" ColumnName="Family" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Patronimic" ColumnName="Patronimic" />
+                <ScalarProperty Name="IdRole" ColumnName="IdRole" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="AuthorizationModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="IdRole" ColumnName="IdRole" />
+                <ScalarProperty Name="Role1" ColumnName="Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypesPorts">
+            <EntityTypeMapping TypeName="AuthorizationModel.TypesPort">
+              <MappingFragment StoreEntitySet="TypesPorts">
+                <ScalarProperty Name="IdTypePort" ColumnName="IdTypePort" />
+                <ScalarProperty Name="TypePort" ColumnName="TypePort" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="AuthorizationModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

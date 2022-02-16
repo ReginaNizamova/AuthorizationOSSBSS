@@ -1,0 +1,57 @@
+﻿<Window x:Class="AuthorizationOSSBSS.Authorization"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AuthorizationOSSBSS"
+        mc:Ignorable="d"
+        Title="Authorization" Height="450" Width="800">
+
+    <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontSize" Value="24"/>
+        </Style>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="1.2*"/>
+            <ColumnDefinition Width="0.7*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.ColumnSpan="2" Content="Телеком Нева Связь" FontSize="34" Foreground="DimGray" Margin="25"/>
+
+        <Image Grid.Column="2" Source="/Resource/Logo.jpg" VerticalAlignment="Top"/>
+
+        <Viewbox Grid.Column="1" Margin="0 0 15 0" Stretch="Uniform">
+            <StackPanel Grid.Column="1" Orientation="Vertical"  VerticalAlignment="Center">
+                <StackPanel  Orientation="Horizontal" Margin="0 60 0 60">
+                    <StackPanel Grid.Column="1" Width="100" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <Label Content="Номер"/>
+                        <Label Content="Пароль"/>
+                        <Label Content="Код"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1"  Width="195" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBox x:Name="numberText" FontSize="20" Height="30" BorderThickness="2" KeyDown="NumberTextKeyDown" PreviewTextInput="NumberTextPreviewTextInput"/>
+                        <PasswordBox PasswordChar="*" FontSize="20"  x:Name="passwordText" Height="30" Margin="0 10 0 10" BorderThickness="2" KeyDown="PasswordTextKeyDown"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox x:Name="codeText" FontSize="20"  Height="30" Margin="0 0 10 0" Width="150" HorizontalAlignment="Left" BorderThickness="2"/>
+                            <Button x:Name="updateCodeButton" BorderThickness="0" Click="UpdateCodeButtonClick">
+                                <Image  Source="/Resource/Update.jpg" Width="30"/>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="cancelButton" Content="Отмена" Height="30" Width="80" FontSize="20" FontWeight="DemiBold" VerticalAlignment="Bottom" Click="CancelButtonClick"/>
+                    <Button x:Name="enterButton" Content="Вход" Margin="35 0 0 0" Height="30" Width="80" FontSize="20" FontWeight="DemiBold" VerticalAlignment="Bottom" Click="EnterButtonClick"/>
+                </StackPanel>
+            </StackPanel>
+        </Viewbox>
+    </Grid>
+</Window>

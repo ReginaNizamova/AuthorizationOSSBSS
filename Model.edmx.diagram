@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8941a09979454b4eb0551e59d78e685d" Name="Diagram1">
+        <EntityTypeShape EntityType="AuthorizationModel.DataConnectionSubscriber" Width="1.5" PointX="10.25" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AuthorizationModel.EquipmentData" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AuthorizationModel.IdentificationData" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AuthorizationModel.InformationInstalledEquipment" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="AuthorizationModel.InstallationPlaceInformation" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AuthorizationModel.Person" Width="1.5" PointX="8" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="AuthorizationModel.Role" Width="1.5" PointX="5.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AuthorizationModel.TypesPort" Width="1.5" PointX="0.75" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AuthorizationModel.User" Width="1.5" PointX="5.75" PointY="5.5" IsExpanded="true" />
+        <AssociationConnector Association="AuthorizationModel.FK_DataConnectionSubscribers_Persons" ManuallyRouted="false" />
+        <AssociationConnector Association="AuthorizationModel.FK_InformationInstalledEquipment_EquipmentData" ManuallyRouted="false" />
+        <AssociationConnector Association="AuthorizationModel.FK_InformationInstalledEquipment_IdentificationData" ManuallyRouted="false" />
+        <AssociationConnector Association="AuthorizationModel.FK_InformationInstalledEquipment_InstallationPlaceInformation" ManuallyRouted="false" />
+        <AssociationConnector Association="AuthorizationModel.FK_InformationInstalledEquipment_TypesPorts" ManuallyRouted="false" />
+        <AssociationConnector Association="AuthorizationModel.FK_Persons_Roles" ManuallyRouted="false" />
+        <AssociationConnector Association="AuthorizationModel.FK_Persons_Users" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
